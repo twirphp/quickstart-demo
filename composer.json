@@ -1,0 +1,14 @@
+{
+    "name": "twirp/quickstart-demo",
+    "autoload": {
+        "psr-4": {
+            "Twirp\\QuickstartDemo\\": "src/",
+            "": "generated/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "twirp/twirp": "^0.8.0",
+        "twirp/quickstart": "dev-master"
+    }
+}

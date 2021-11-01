@@ -15,7 +15,7 @@
       let pkgs = import nixpkgs { inherit system; };
       in {
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ git php php.packages.composer protobuf ];
+          buildInputs = with pkgs; [ git php php.packages.composer protobuf protoc-gen-twirp_php ];
         };
       });
 }
