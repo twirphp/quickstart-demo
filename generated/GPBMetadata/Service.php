@@ -16,15 +16,16 @@ class Service
         }
         $pool->internalAddGeneratedFile(
             '
-½
-service.prototwirp.quickstartDemo"
-HelloReq
-subject (	"
-	HelloResp
-text (	2V
-
-HelloWorldH
-Hello.twirp.quickstartDemo.HelloReq.twirp.quickstartDemo.HelloRespbproto3'
+Ó
+service.prototwitch.twirp.example"0
+Hat
+size (
+color (	
+name (	"
+Size
+inches (2O
+Haberdasher@
+MakeHat.twitch.twirp.example.Size.twitch.twirp.example.HatB	Zexamplebproto3'
         , true);
 
         static::$is_initialized = true;

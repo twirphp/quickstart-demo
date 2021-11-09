@@ -1,15 +1,12 @@
 <?php
 
-require __DIR__.'/vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
 $request = \GuzzleHttp\Psr7\ServerRequest::fromGlobals();
 
-$server = new \Twirp\Server();
+$handler = new \Twitch\Twirp\Example\HaberdasherServer(new \Twirp\Example\Haberdasher());
 
-$handler = new \Twirp\QuickstartDemo\HelloWorldServer(new \Twirp\QuickstartDemo\MyHelloWorld());
-$server->registerServer(\Twirp\QuickstartDemo\HelloWorldServer::PATH_PREFIX, $handler);
-
-$response = $server->handle($request);
+$response = $handler->handle($request);
 
 if (!headers_sent()) {
     // status
@@ -17,8 +14,9 @@ if (!headers_sent()) {
     // headers
     foreach ($response->getHeaders() as $header => $values) {
         foreach ($values as $value) {
-            header($header.': '.$value, false, $response->getStatusCode());
+            header($header . ': ' . $value, false, $response->getStatusCode());
         }
     }
 }
+
 echo $response->getBody();

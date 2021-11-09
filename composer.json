@@ -1,8 +1,8 @@
 {
-    "name": "twirp/quickstart-demo",
+    "name": "twirp/example",
     "autoload": {
         "psr-4": {
-            "Twirp\\QuickstartDemo\\": "src/",
+            "Twirp\\Example\\": "src/",
             "": "generated/"
         }
     },

@@ -4,7 +4,7 @@
 
 declare(strict_types=1);
 
-namespace Twirp\QuickstartDemo;
+namespace Twitch\Twirp\Example;
 
 use Google\Protobuf\Internal\GPBDecodeException;
 use Http\Discovery\Psr17FactoryDiscovery;
@@ -19,13 +19,13 @@ use Twirp\ErrorCode;
 use Twirp\ServerHooks;
 
 /**
- * @see HelloWorld
+ * @see Haberdasher
  *
- * Generated from protobuf service <code>twirp.quickstartDemo.HelloWorld</code>
+ * Generated from protobuf service <code>twitch.twirp.example.Haberdasher</code>
  */
-final class HelloWorldServer implements RequestHandlerInterface
+final class HaberdasherServer implements RequestHandlerInterface
 {
-    const PATH_PREFIX = '/twirp/twirp.quickstartDemo.HelloWorld/';
+    const PATH_PREFIX = '/twirp/twitch.twirp.example.Haberdasher/';
 
     /**
      * @var ResponseFactoryInterface
@@ -38,7 +38,7 @@ final class HelloWorldServer implements RequestHandlerInterface
     private $streamFactory;
 
     /**
-     * @var HelloWorld
+     * @var Haberdasher
      */
     private $svc;
 
@@ -48,7 +48,7 @@ final class HelloWorldServer implements RequestHandlerInterface
     private $hook;
 
     public function __construct(
-        HelloWorld $svc,
+        Haberdasher $svc,
         ServerHooks $hook = null,
         ResponseFactoryInterface $responseFactory = null,
         StreamFactoryInterface $streamFactory = null
@@ -77,8 +77,8 @@ final class HelloWorldServer implements RequestHandlerInterface
     public function handle(ServerRequestInterface $req): ResponseInterface
     {
         $ctx = $req->getAttributes();
-        $ctx = Context::withPackageName($ctx, 'twirp.quickstartDemo');
-        $ctx = Context::withServiceName($ctx, 'HelloWorld');
+        $ctx = Context::withPackageName($ctx, 'twitch.twirp.example');
+        $ctx = Context::withServiceName($ctx, 'Haberdasher');
 
         try {
             $ctx = $this->hook->requestReceived($ctx);
@@ -93,15 +93,15 @@ final class HelloWorldServer implements RequestHandlerInterface
         }
 
         switch ($req->getUri()->getPath()) {
-            case '/twirp/twirp.quickstartDemo.HelloWorld/Hello':
-                return $this->handleHello($ctx, $req);
+            case '/twirp/twitch.twirp.example.Haberdasher/MakeHat':
+                return $this->handleMakeHat($ctx, $req);
 
             default:
                 return $this->writeError($ctx, $this->noRouteError($req));
         }
     }
 
-    private function handleHello(array $ctx, ServerRequestInterface $req): ResponseInterface
+    private function handleMakeHat(array $ctx, ServerRequestInterface $req): ResponseInterface
     {
         $header = $req->getHeaderLine('Content-Type');
         $i = strpos($header, ';');
@@ -115,11 +115,11 @@ final class HelloWorldServer implements RequestHandlerInterface
 
         switch (trim(strtolower(substr($header, 0, $i)))) {
             case 'application/json':
-                $resp = $this->handleHelloJson($ctx, $req);
+                $resp = $this->handleMakeHatJson($ctx, $req);
                 break;
 
             case 'application/protobuf':
-                $resp = $this->handleHelloProtobuf($ctx, $req);
+                $resp = $this->handleMakeHatProtobuf($ctx, $req);
                 break;
 
             default:
@@ -135,20 +135,20 @@ final class HelloWorldServer implements RequestHandlerInterface
         return $resp;
     }
 
-    private function handleHelloJson(array $ctx, ServerRequestInterface $req): ResponseInterface
+    private function handleMakeHatJson(array $ctx, ServerRequestInterface $req): ResponseInterface
     {
-        $ctx = Context::withMethodName($ctx, 'Hello');
+        $ctx = Context::withMethodName($ctx, 'MakeHat');
 
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Twirp\QuickstartDemo\HelloReq();
+            $in = new \Twitch\Twirp\Example\Size();
             $in->mergeFromJsonString((string)$req->getBody(), true);
 
-            $out = $this->svc->Hello($ctx, $in);
+            $out = $this->svc->MakeHat($ctx, $in);
 
             if ($out === null) {
-                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling Hello. null responses are not supported'));
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling MakeHat. null responses are not supported'));
             }
 
             $ctx = $this->hook->responsePrepared($ctx);
@@ -172,20 +172,20 @@ final class HelloWorldServer implements RequestHandlerInterface
         return $resp;
     }
 
-    private function handleHelloProtobuf(array $ctx, ServerRequestInterface $req): ResponseInterface
+    private function handleMakeHatProtobuf(array $ctx, ServerRequestInterface $req): ResponseInterface
     {
-        $ctx = Context::withMethodName($ctx, 'Hello');
+        $ctx = Context::withMethodName($ctx, 'MakeHat');
 
         try {
             $ctx = $this->hook->requestRouted($ctx);
 
-            $in = new \Twirp\QuickstartDemo\HelloReq();
+            $in = new \Twitch\Twirp\Example\Size();
             $in->mergeFromString((string)$req->getBody());
 
-            $out = $this->svc->Hello($ctx, $in);
+            $out = $this->svc->MakeHat($ctx, $in);
 
             if ($out === null) {
-                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling Hello. null responses are not supported'));
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling MakeHat. null responses are not supported'));
             }
 
             $ctx = $this->hook->responsePrepared($ctx);

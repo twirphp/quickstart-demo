@@ -4,7 +4,7 @@
 
 declare(strict_types=1);
 
-namespace Twirp\QuickstartDemo;
+namespace Twitch\Twirp\Example;
 
 use Google\Protobuf\Internal\Message;
 use Http\Discovery\Psr17FactoryDiscovery;
@@ -19,12 +19,12 @@ use Twirp\Error;
 use Twirp\ErrorCode;
 
 /**
- * @internal HelloWorldAbstractClient provides abstraction for JsonClient and Client (default).
+ * @internal HaberdasherAbstractClient provides abstraction for JsonClient and Client (default).
  * Note that you MUST NOT use it directly! It is an internal implementation detail that is not
  * covered by backward compatibility promise. The only thing that will and should remain backward
  * compatible is the two clients.
  */
-abstract class HelloWorldAbstractClient
+abstract class HaberdasherAbstractClient
 {
     /**
      * @var server
@@ -80,19 +80,19 @@ abstract class HelloWorldAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function Hello(array $ctx, \Twirp\QuickstartDemo\HelloReq $in): \Twirp\QuickstartDemo\HelloResp
+    public function MakeHat(array $ctx, \Twitch\Twirp\Example\Size $in): \Twitch\Twirp\Example\Hat
     {
-        $ctx = Context::withPackageName($ctx, 'twirp.quickstartDemo');
-        $ctx = Context::withServiceName($ctx, 'HelloWorld');
-        $ctx = Context::withMethodName($ctx, 'Hello');
+        $ctx = Context::withPackageName($ctx, 'twitch.twirp.example');
+        $ctx = Context::withServiceName($ctx, 'Haberdasher');
+        $ctx = Context::withMethodName($ctx, 'MakeHat');
 
-        $out = new \Twirp\QuickstartDemo\HelloResp();
+        $out = new \Twitch\Twirp\Example\Hat();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/twirp.quickstartDemo.HelloWorld/Hello';
+            $url = $url.'/twitch.twirp.example.Haberdasher/MakeHat';
         } else {
-            $url = $url.'/'.$this->prefix.'/twirp.quickstartDemo.HelloWorld/Hello';
+            $url = $url.'/'.$this->prefix.'/twitch.twirp.example.Haberdasher/MakeHat';
         }
 
         $this->doRequest($ctx, $url, $in, $out);

@@ -4,27 +4,27 @@
 
 declare(strict_types=1);
 
-namespace Twirp\QuickstartDemo;
+namespace Twitch\Twirp\Example;
 
 use Google\Protobuf\Internal\GPBDecodeException;
 use Google\Protobuf\Internal\Message;
 
 /**
- * A JSON client that implements the {@see HelloWorld} interface.
- * It communicates using JSON and can be configured with a custom HTTP Client.
+ * A Protobuf client that implements the {@see Haberdasher} interface.
+ * It communicates using Protobuf and can be configured with a custom HTTP Client.
  *
- * Generated from protobuf service <code>twirp.quickstartDemo.HelloWorld</code>
+ * Generated from protobuf service <code>twitch.twirp.example.Haberdasher</code>
  */
-final class HelloWorldJsonClient extends HelloWorldAbstractClient implements HelloWorld
+final class HaberdasherClient extends HaberdasherAbstractClient implements Haberdasher
 {
     /**
      * @inheritDoc
      */
     protected function doRequest(array $ctx, string $url, Message $in, Message $out): void
     {
-        $body = $in->serializeToJsonString();
+        $body = $in->serializeToString();
 
-        $req = $this->newRequest($ctx, $url, $body, 'application/json');
+        $req = $this->newRequest($ctx, $url, $body, 'application/protobuf');
 
         try {
             $resp = $this->httpClient->sendRequest($req);
@@ -37,9 +37,9 @@ final class HelloWorldJsonClient extends HelloWorldAbstractClient implements Hel
         }
 
         try {
-            $out->mergeFromJsonString((string)$resp->getBody());
+            $out->mergeFromString((string)$resp->getBody());
         } catch (GPBDecodeException $e) {
-            throw $this->clientError('failed to unmarshal json response', $e);
+            throw $this->clientError('failed to unmarshal proto response', $e);
         }
     }
 }

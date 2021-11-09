@@ -3,7 +3,7 @@
 
 declare(strict_types=1);
 
-namespace Twirp\QuickstartDemo;
+namespace Twitch\Twirp\Example;
 
 use Twirp\ErrorCode;
 use Twirp\Error;

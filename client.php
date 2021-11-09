@@ -1,20 +1,20 @@
 <?php
 
-require __DIR__.'/vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
-$client = new \Twirp\QuickstartDemo\HelloWorldClient($argv[1]);
+$client = new \Twitch\Twirp\Example\HaberdasherClient($argv[1]);
 
-$req = new \Twirp\QuickstartDemo\HelloReq();
-$req->setSubject("World");
+$size = new \Twitch\Twirp\Example\Size();
+$size->setInches(1234);
 
 try {
-    $resp = $client->Hello([], $req);
+    $hat = $client->MakeHat([], $size);
 
-    echo $resp->getText();
+    var_dump($hat->serializeToJsonString());
 } catch (\Twirp\Error $e) {
-    echo json_encode([
+    var_dump(json_encode([
         'code' => $e->getErrorCode(),
         'msg' => $e->getMessage(),
         'meta' => $e->getMetaMap(),
-    ]);
+    ]));
 }
