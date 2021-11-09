@@ -10,11 +10,11 @@ $size->setInches(1234);
 try {
     $hat = $client->MakeHat([], $size);
 
-    var_dump($hat->serializeToJsonString());
+    echo $hat->serializeToJsonString();
 } catch (\Twirp\Error $e) {
-    var_dump(json_encode([
+    echo json_encode([
         'code' => $e->getErrorCode(),
         'msg' => $e->getMessage(),
         'meta' => $e->getMetaMap(),
-    ]));
+    ]);
 }
