@@ -6,9 +6,13 @@
             "": "generated/"
         }
     },
-    "minimum-stability": "dev",
     "require": {
-        "twirp/twirp": "^0.8.0",
+        "twirp/twirp": "0.9.1",
         "twirp/quickstart": "dev-master"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": false
+        }
     }
 }

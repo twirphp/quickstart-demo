@@ -16,7 +16,7 @@ class Service
         }
         $pool->internalAddGeneratedFile(
             '
-Ó
+È
 service.prototwitch.twirp.example"0
 Hat
 size (
@@ -25,7 +25,7 @@ class Service
 Size
 inches (2O
 Haberdasher@
-MakeHat.twitch.twirp.example.Size.twitch.twirp.example.HatB	Zexamplebproto3'
+MakeHat.twitch.twirp.example.Size.twitch.twirp.example.Hatbproto3'
         , true);
 
         static::$is_initialized = true;

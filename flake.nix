@@ -2,20 +2,45 @@
   description = "TwirPHP quickstart demo";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    devenv.url = "github:cachix/devenv";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = import nixpkgs { inherit system; };
-      in {
-        devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ git php php.packages.composer protobuf protoc-gen-twirp_php ];
+  outputs = inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        inputs.devenv.flakeModule
+      ];
+
+      systems = [ "x86_64-linux" "x86_64-darwin" "aarch64-darwin" ];
+
+      perSystem = { config, self', inputs', pkgs, system, ... }: rec {
+        devenv.shells = {
+          default = {
+            languages = {
+              php = {
+                enable = true;
+              };
+            };
+
+            pre-commit.hooks = {
+              nixpkgs-fmt.enable = true;
+            };
+
+            packages = with pkgs; [
+              protobuf
+              protoc-gen-twirp_php
+            ];
+
+            enterShell = ''
+              export PATH="$PWD/$(composer config vendor-dir)/bin:$PATH"
+            '';
+
+            # https://github.com/cachix/devenv/issues/528#issuecomment-1556108767
+            containers = pkgs.lib.mkForce { };
+          };
         };
-      });
+      };
+    };
 }
